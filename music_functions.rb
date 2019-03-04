@@ -73,7 +73,7 @@ def show_all_by artist
   end
 end
 
-# # show unplayed songs by a specific artist
+# show unplayed songs by a specific artist
 def show_unplayed_by artist
   if $albums.any?
     x = nil
@@ -94,9 +94,4 @@ def show_unplayed_by artist
   else
     puts "You don't have any albums! You should add some."
   end
-end
-
-def quit
-# quit is a reserved command in IRB
-# TODO - add goodbye message
 end
