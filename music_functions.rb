@@ -63,13 +63,17 @@ end
 def show_all_by artist
   if $albums.any?
     x = nil
+    artist_albums = []
     $albums.each do |album, status|
       if album[1].downcase == artist.downcase
-        puts "\"#{album[0]}\" by #{album[1]}"
+        puts "\"#{album[0]}\" by #{album[1]} (#{status})"
+        artist_albums.push(album)
         x = true
       end
     end
-    if x == nil
+    if x == true
+      return artist_albums
+    else
       puts "You don't have any albums by that artist."
     end
   else
@@ -81,19 +85,20 @@ end
 def show_unplayed_by artist
   if $albums.any?
     x = nil
+    artist_unplayed = []
     $albums.each do |album, status|
       if album[1].downcase == artist.downcase
         if status == "unplayed"
           puts "\"#{album[0]}\" by #{album[1]}"
-           x = true
-        end
-        if x == nil
-          puts "You don't have any unplayed albums by that artist."
+          artist_unplayed.push(album)
+          x = true
         end
       end
     end
-    if x == nil
-      puts "You don't have any albums by that artist."
+    if x == true
+      return artist_unplayed
+    else
+      puts "You don't have any unplayed albums by that artist."
     end
   else
     puts "You don't have any albums! You should add some."
