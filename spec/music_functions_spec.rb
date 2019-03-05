@@ -10,6 +10,7 @@ describe "add" do
      it "adds new album" do
       expect(add("Ride the Lightning", "Metallica")).to eq ["Ride the Lightning", "Metallica"]
     end
+
   end
 
   context "when song title already exists" do
@@ -61,7 +62,7 @@ describe "play" do
     end
   end
 
-  context "when library does not contain that particular song" do
+  context "when library doesn't contain that particular song" do
     before do
       $albums = {["Pauls Boutique", "Beastie Boys"]=>"unplayed"}
     end
@@ -123,9 +124,28 @@ describe "show all by" do
     before do
       $albums = {}
     end
+    it "shows no albums" do
+      expect(show_all_by("Beastie Boys")).to eq nil
+    end
+  end
+
+  context "when library doesn't contain songs by that artist" do
+    before do
+      $albums = {["Ride the Lightning", "Metallica"]=>"unplayed"}
+    end
 
     it "shows no albums" do
       expect(show_all_by("Beastie Boys")).to eq nil
+    end
+  end
+
+  context "when library contains songs by that artist" do
+    before do
+      $albums = {["Ride the Lightning", "Metallica"]=>"unplayed"}
+    end
+
+    it "shows albums" do
+      expect(show_all_by("Metallica")).to eq [["Ride the Lightning", "Metallica"]]
     end
   end
 
@@ -140,6 +160,26 @@ describe "show unplayed by" do
 
     it "shows no albums" do
       expect(show_unplayed_by("Beastie Boys")).to eq nil
+    end
+  end
+
+  context "when library doesn't contain unplayed albums by that artist" do
+    before do
+      $albums = {["Ride the Lightning", "Metallica"]=>"unplayed", ["Pauls Boutique", "Beastie Boys"]=>"played"}
+    end
+
+    it "shows no albums" do
+      expect(show_unplayed_by("Beastie Boys")).to eq nil
+    end
+  end
+
+  context "when library contains unplayed albums by that artist" do
+    before do
+      $albums = {["Ride the Lightning", "Metallica"]=>"played", ["Pauls Boutique", "Beastie Boys"]=>"unplayed"}
+    end
+
+    it "shows albums" do
+      expect(show_unplayed_by("Beastie Boys")).to eq [["Pauls Boutique", "Beastie Boys"]]
     end
   end
 
