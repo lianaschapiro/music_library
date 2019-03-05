@@ -1,3 +1,4 @@
+# start with an empty library
 $albums = {}
 
 # add songs to your library
@@ -5,12 +6,14 @@ def add title, artist
   $albums.each do |album, status|
     # screen for duplicates
     if album[0].downcase == title.downcase
-      return "You already have a song by that name."
+      puts "You already have a song by that name."
+      return nil
     end
   end
     album = [title, artist]
     $albums[album] = "unplayed"
-    puts "Added \"#{title}\" by #{artist}"
+    # artist = artist.gsub('"', '')
+    puts "Added #{title} by #{artist.gsub('"', '')}"
     return album
 end
 
@@ -20,7 +23,7 @@ def play title
     $albums.each do |album, status|
       if album[0].downcase == title.downcase
         $albums[album] = "played"
-        puts "You're listening to \"#{album[0]}\""
+        puts "You're listening to #{album[0]}"
         return album => $albums[album]
       end
     end
@@ -33,7 +36,7 @@ end
 # see all songs
 def show_all
   if $albums.any?
-    $albums.each { |album, status| puts "#{album[0]} by #{album[1]} (#{status})" }
+    $albums.each { |album, status| puts "#{album[0]} by #{album[1].gsub('"', '')} (#{status})" }
   else
     puts "You don't have any albums! You should add some."
   end
@@ -46,7 +49,7 @@ def show_unplayed
       unplayed = []
       $albums.each do |album, status|
         if status == "unplayed"
-          puts "\"#{album[0]}\" by #{album[1]}"
+          puts "#{album[0]} by #{album[1].gsub('"', '')}"
           unplayed.push(album)
         end
       end
@@ -66,7 +69,7 @@ def show_all_by artist
     artist_albums = []
     $albums.each do |album, status|
       if album[1].downcase == artist.downcase
-        puts "\"#{album[0]}\" by #{album[1]} (#{status})"
+        puts "#{album[0]} by #{album[1].gsub('"', '')} (#{status})"
         artist_albums.push(album)
         x = true
       end
@@ -89,7 +92,7 @@ def show_unplayed_by artist
     $albums.each do |album, status|
       if album[1].downcase == artist.downcase
         if status == "unplayed"
-          puts "\"#{album[0]}\" by #{album[1]}"
+          puts "#{album[0]} by #{album[1].gsub('"', '')}"
           artist_unplayed.push(album)
           x = true
         end

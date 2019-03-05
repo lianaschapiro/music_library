@@ -19,7 +19,7 @@ describe "add" do
     end
 
     it "will not add duplicate album" do
-      expect(add("Ride the Lightning", "Metallica")).to eq "You already have a song by that name."
+      expect(add("Ride the Lightning", "Metallica")).to eq nil
     end
   end
 
